@@ -68,7 +68,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Future<void> initDynamsoftBarcodeReaderState() async {
     _barcodeReader = BarcodeReader();
     await _barcodeReader.initLicense('LICENSE-KEY');
-    print('flutter init license');
   }
 
   @override
