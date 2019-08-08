@@ -1,5 +1,5 @@
 # Flutter Barcode Plugin
-The sample demonstrates how to create a simple Flutter barcode plugin with [Dynamsoft Barcode Reader SDK for Android](https://www.dynamsoft.com/Products/barcode-scanner-sdk-android.aspx).
+The sample demonstrates how to create a simple ``Flutter barcode plugin`` with [Dynamsoft Barcode Reader SDK for Android](https://www.dynamsoft.com/Products/barcode-scanner-sdk-android.aspx).
 
 ## Usage
 Download the source code:
@@ -8,7 +8,7 @@ Download the source code:
 git clone https://github.com/yushulx/flutter-barcode-plugin.git
 ```
 
-Get a free 30-day trial license and set it in ``demo\lib\main.dart``:
+Get a [free 30-day trial license](https://www.dynamsoft.com/CustomerPortal/Portal/Triallicense.aspx) and set it in ``demo\lib\main.dart``:
 
 ```dart
 Future<void> initDynamsoftBarcodeReaderState() async {
@@ -17,7 +17,7 @@ Future<void> initDynamsoftBarcodeReaderState() async {
   }
 ```
 
-Change directory to demo folder and run the app:
+Change directory to ``demo`` folder and run the app:
 
 ```
 cd demo
