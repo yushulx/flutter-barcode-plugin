@@ -1,0 +1,7 @@
+*.prefs
+*.project
+*.packages
+*.vscode
+*.classpath
+*.lock
+

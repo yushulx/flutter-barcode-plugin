@@ -46,6 +46,6 @@ public class BarcodeManager {
         } catch (BarcodeReaderException e) {
             e.printStackTrace();
         }
-        return "";
+        return "No Barcode Detected.";
     }
 }
