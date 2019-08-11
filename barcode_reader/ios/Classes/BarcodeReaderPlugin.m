@@ -1,4 +1,5 @@
 #import "BarcodeReaderPlugin.h"
+#import <DynamsoftBarcodeReader/DynamsoftBarcodeSDK.h>
 
 @implementation BarcodeReaderPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
