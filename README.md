@@ -17,14 +17,40 @@ Future<void> initDynamsoftBarcodeReaderState() async {
   }
 ```
 
-Change directory to ``demo`` folder and run the app:
+Read barcodes from an image file:
+
+```dart
+await _controller.takePicture(path);
+String results = await _barcodeReader.decodeFile(path);
+```
+
+Build and run the app:
+
+**Android**
 
 ```
 cd demo
-flutter run
+flutter run -d <Android Device ID>
+```
+
+**iOS**
+
+```
+cd demo/ios
+pod install
+cd ..
+flutter run -d <iOS Device ID>
 ```
 
 ![flutter barcode plugin](https://www.codepool.biz/wp-content/uploads/2019/08/flutter-barcode-plugin.png)
 
-## Flutter Plugin for Android
-To edit and improve the plugin, import ``barcode_reader\example\android`` to ``Android Studio``.
+## Flutter Barcode Plugin for Android & iOS
+To edit and improve the plugin:
+
+**Android**
+
+Import ``barcode_reader/example/android`` to ``Android Studio``.
+
+**iOS**
+
+Import ``barcode_reader/example/ios/Runner.xcworkspace `` to ``Xcode``.
