@@ -54,3 +54,8 @@ Import ``barcode_reader/example/android`` to ``Android Studio``.
 **iOS**
 
 Import ``barcode_reader/example/ios/Runner.xcworkspace `` to ``Xcode``.
+
+## Reference
+- https://flutter.dev/docs/development/packages-and-plugins/developing-packages
+- https://flutter.dev/docs/cookbook/plugins/picture-using-camera
+- https://pub.dev/packages/camera
