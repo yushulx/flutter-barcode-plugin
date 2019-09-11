@@ -59,3 +59,6 @@ Import ``barcode_reader/example/ios/Runner.xcworkspace `` to ``Xcode``.
 - https://flutter.dev/docs/development/packages-and-plugins/developing-packages
 - https://flutter.dev/docs/cookbook/plugins/picture-using-camera
 - https://pub.dev/packages/camera
+
+## Blog
+[How to Create A Simple Flutter Barcode Plugin from Scratch](https://www.codepool.biz/flutter-barcode-plugin.html)
