@@ -1,7 +1,8 @@
 package com.dynamsoft.barcode_reader;
 
+import androidx.annotation.NonNull;
 import java.util.ArrayList;
-
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -9,11 +10,17 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** BarcodeReaderPlugin */
-public class BarcodeReaderPlugin implements MethodCallHandler {
-  /** Plugin registration. */
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "barcode_reader");
-    channel.setMethodCallHandler(new BarcodeReaderPlugin());
+public class BarcodeReaderPlugin implements FlutterPlugin, MethodCallHandler {
+  /// The MethodChannel that will the communication between Flutter and native Android
+  ///
+  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+  /// when the Flutter Engine is detached from the Activity
+  private MethodChannel channel;
+
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "barcode_reader");
+    channel.setMethodCallHandler(this);
   }
 
   private BarcodeManager mBarcodeManager;
@@ -23,8 +30,8 @@ public class BarcodeReaderPlugin implements MethodCallHandler {
   }
 
   @Override
-  public void onMethodCall(MethodCall call, Result result) {
-    ArrayList<String> args = (ArrayList<String>)call.arguments;
+  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+	ArrayList<String> args = (ArrayList<String>)call.arguments;
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     } else if (call.method.equals("initLicense")) {
@@ -35,5 +42,10 @@ public class BarcodeReaderPlugin implements MethodCallHandler {
     } else {
       result.notImplemented();
     }
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setMethodCallHandler(null);
   }
 }

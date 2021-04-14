@@ -3,11 +3,13 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' show join;
-import 'package:path_provider/path_provider.dart';
 import 'package:barcode_reader/barcode_reader.dart';
 
 Future<void> main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Obtain a list of the available cameras on the device.
   final cameras = await availableCameras();
 
@@ -16,9 +18,7 @@ Future<void> main() async {
 
   runApp(
     MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
       home: TakePictureScreen(
         // Pass the appropriate camera to the TakePictureScreen widget.
         camera: firstCamera,
@@ -27,7 +27,6 @@ Future<void> main() async {
   );
 }
 
-// https://flutter.dev/docs/cookbook/plugins/picture-using-camera
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -60,7 +59,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
-
     // Initialize Dynamsoft Barcode Reader
     initDynamsoftBarcodeReaderState();
   }
@@ -89,14 +87,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the Future is complete, display the preview.
-            if (Platform.isAndroid) {
-              return AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: CameraPreview(_controller),
-              );
-            } else {
-              return CameraPreview(_controller);
-            }
+            return CameraPreview(_controller);
           } else {
             // Otherwise, display a loading indicator.
             return Center(child: CircularProgressIndicator());
@@ -113,24 +104,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Ensure that the camera is initialized.
             await _initializeControllerFuture;
 
-            // Construct the path where the image should be saved using the
-            // pattern package.
-            final path = join(
-              // Store the picture in the temp directory.
-              // Find the temp directory using the `path_provider` plugin.
-              (await getTemporaryDirectory()).path,
-              '${DateTime.now()}.png',
-            );
+            // Attempt to take a picture and get the file `image`
+            // where it was saved.
+            final image = await _controller.takePicture();
 
-            // Attempt to take a picture and log where it's been saved.
-            await _controller.takePicture(path);
-            print(path);
-            String results = await _barcodeReader.decodeFile(path);
+			String results = await _barcodeReader.decodeFile(image?.path);
             // If the picture was taken, display it on a new screen.
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path, barcodeResults: results),
+                builder: (context) => DisplayPictureScreen(
+                  // Pass the automatically generated path to
+                  // the DisplayPictureScreen widget.
+                  imagePath: image?.path, barcodeResults: results
+                ),
               ),
             );
           } catch (e) {
