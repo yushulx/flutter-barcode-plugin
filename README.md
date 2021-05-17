@@ -1,3 +1,7 @@
+The project is not maintained anymore. It has been migrated to https://github.com/yushulx/flutter_barcode_sdk.
+
+
+
 # Flutter Barcode Plugin
 The sample demonstrates how to create a simple ``Flutter barcode plugin`` with [Dynamsoft Barcode Reader SDK](https://www.dynamsoft.com/Products/Dynamic-Barcode-Reader.aspx).
 
